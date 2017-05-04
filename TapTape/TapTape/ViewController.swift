@@ -18,7 +18,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIImagePickerContr
     var scrollImages: [UIImage] = [#imageLiteral(resourceName: "sample1"), #imageLiteral(resourceName: "sample2"), #imageLiteral(resourceName: "sample3")]
     var scrollRecords:[Record?] = [nil, nil, nil]
     var scrollWidth : CGFloat = UIScreen.main.bounds.size.width
-    var scrollHeight : CGFloat = UIScreen.main.bounds.size.height - 200
+    var scrollHeight : CGFloat = UIScreen.main.bounds.size.height - 240
     var selectImage:UIImage?;
 
     let imagePicker = UIImagePickerController()
