@@ -20,6 +20,14 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>The app wants to open the camera to take pictures.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>The app wants to know your location all the time.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>The app wants to know your location while you use it.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>The app wants to open the photo library to select the image.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
