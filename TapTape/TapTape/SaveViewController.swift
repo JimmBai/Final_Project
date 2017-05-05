@@ -76,10 +76,7 @@ class SaveViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func saveData(_ sender: UIButton) {
         if let text = nameInput.text {
             if photoTaken {
-//                let imageData = UIImageJPEGRepresentation(photo!, 0.6)
-//                let compressedJPGImage = UIImage(data: imageData!)
-//                UIImageWriteToSavedPhotosAlbum(compressedJPGImage!, nil, nil, nil)
-                
+
                 if PHPhotoLibrary.authorizationStatus() == .notDetermined {
                     PHPhotoLibrary.requestAuthorization({(status:PHAuthorizationStatus) in
                         switch status{
@@ -118,6 +115,10 @@ class SaveViewController: UIViewController, CLLocationManagerDelegate {
             }, completionHandler: { success, error in
                 if !success { print("error creating asset") }
             })
+        } else {
+            let imageData = UIImageJPEGRepresentation(photo!, 0.6)
+            let compressedJPGImage = UIImage(data: imageData!)
+            UIImageWriteToSavedPhotosAlbum(compressedJPGImage!, nil, nil, nil)
         }
     }
 
