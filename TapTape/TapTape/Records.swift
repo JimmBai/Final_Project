@@ -42,6 +42,11 @@ func deleteAllData()
     }
 }
 
+func resetAllData() {
+    deleteAllData()
+    savedRecords.removeAll()
+    retrieveData()
+}
 var photoTaken = false
 var calculateStats = false
 

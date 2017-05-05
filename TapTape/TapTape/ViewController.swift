@@ -46,7 +46,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIImagePickerContr
     }
 
     func loadImageFromLib() {
-        imagePicker.allowsEditing = true
+        imagePicker.allowsEditing = false
         imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary;
         present(imagePicker, animated: true, completion: nil)
     }

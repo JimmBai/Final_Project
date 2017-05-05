@@ -153,7 +153,9 @@ class ImageMeasureViewController: UIViewController {
     @IBAction func calculate(_ sender: UIButton) {
         tapRef = false
         tapMeasure = false
-        self.performSegue(withIdentifier: "imageMeasureToResult", sender: self)
+        if (tapRefCnt > 1 && tapMeasureCnt > 1) {
+            self.performSegue(withIdentifier: "imageMeasureToResult", sender: self)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
