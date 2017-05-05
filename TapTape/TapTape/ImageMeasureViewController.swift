@@ -110,7 +110,7 @@ class ImageMeasureViewController: UIViewController {
         }
         shapeLayer.fillColor = dot_color
         shapeLayer.strokeColor = dot_color
-        shapeLayer.lineWidth = 3.0
+        shapeLayer.lineWidth = 5.0
         imageView.layer.addSublayer(shapeLayer)
     }
     
