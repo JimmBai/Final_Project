@@ -44,6 +44,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIImagePickerContr
         
         imagePicker.delegate = self
     }
+    
+    func resetButton() {
+        deleteAllData()
+        savedRecords.removeAll()
+        scrollImages = [#imageLiteral(resourceName: "sample1"), #imageLiteral(resourceName: "sample2"), #imageLiteral(resourceName: "sample3")]
+        refreshScroll()
+    }
 
     func loadImageFromLib() {
         imagePicker.allowsEditing = false
