@@ -9,6 +9,8 @@
 import UIKit
 import AssetsLibrary
 import CoreLocation
+import ImageIO
+import Photos
 
 class ViewController: UIViewController, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -28,7 +30,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIImagePickerContr
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         // Do any additional setup after loading the view, typically from a nib.
         scrollView?.contentSize = CGSize(width: (scrollWidth * 3), height: scrollHeight)
@@ -70,6 +71,17 @@ class ViewController: UIViewController, UIScrollViewDelegate, UIImagePickerContr
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             selectImage = pickedImage
             proceed = true
+
+            let imageurl = info[UIImagePickerControllerReferenceURL] as! URL
+            let asset = PHAsset.fetchAssets(withALAssetURLs: [imageurl], options: nil).firstObject
+            if let passet = asset {
+                if let location = passet.location {
+                    latitude = location.coordinate.latitude
+                    longitude = location.coordinate.longitude
+                    print("photo latitude = \(location.coordinate.latitude)")
+                    print("photo longitude = \(location.coordinate.longitude)")
+                }
+            }
         }
 
         dismiss(animated: true, completion: { () in

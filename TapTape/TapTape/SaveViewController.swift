@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import Photos
 
 class SaveViewController: UIViewController, CLLocationManagerDelegate {
 
@@ -34,10 +35,12 @@ class SaveViewController: UIViewController, CLLocationManagerDelegate {
 
         manager.requestLocation()
         if let userLocation:CLLocation = manager.location {
-            latitude = userLocation.coordinate.latitude
-            longitude = userLocation.coordinate.longitude
-            print("user latitude = \(userLocation.coordinate.latitude)")
-            print("user longitude = \(userLocation.coordinate.longitude)")
+            if latitude == nil || longitude == nil {
+                latitude = userLocation.coordinate.latitude
+                longitude = userLocation.coordinate.longitude
+                print("user latitude = \(userLocation.coordinate.latitude)")
+                print("user longitude = \(userLocation.coordinate.longitude)")
+            }
         } else {
             print("Cannot get geo")
         }
@@ -53,10 +56,12 @@ class SaveViewController: UIViewController, CLLocationManagerDelegate {
         let userLocation:CLLocation = locations[0] as CLLocation
         
         manager.stopUpdatingLocation()
-        latitude = userLocation.coordinate.latitude
-        longitude = userLocation.coordinate.longitude
-        print("user latitude = \(userLocation.coordinate.latitude)")
-        print("user longitude = \(userLocation.coordinate.longitude)")
+        if latitude == nil || longitude == nil {
+            latitude = userLocation.coordinate.latitude
+            longitude = userLocation.coordinate.longitude
+            print("user latitude = \(userLocation.coordinate.latitude)")
+            print("user longitude = \(userLocation.coordinate.longitude)")
+        }
     }
     
     func presentConfirmationAlert() {
@@ -74,12 +79,48 @@ class SaveViewController: UIViewController, CLLocationManagerDelegate {
                 let imageData = UIImageJPEGRepresentation(photo!, 0.6)
                 let compressedJPGImage = UIImage(data: imageData!)
                 UIImageWriteToSavedPhotosAlbum(compressedJPGImage!, nil, nil, nil)
+                
+                if PHPhotoLibrary.authorizationStatus() == .notDetermined {
+                    PHPhotoLibrary.requestAuthorization({(status:PHAuthorizationStatus) in
+                        switch status{
+                        case .authorized:
+                            self.saveGeoInfo()
+                            print("Authorized")
+                            break
+                        case .denied:
+                            print("Denied")
+                            break
+                        default:
+                            print("Default")
+                            break
+                        }
+                    })
+                } else if PHPhotoLibrary.authorizationStatus() == .authorized {
+                    saveGeoInfo()
+                    print("already authroized")
+                }
             }
+
             saveMeasureData(photo, text)
             presentConfirmationAlert()
         }
     }
     
+    func saveGeoInfo() {
+        if self.latitude != nil && self.longitude != nil {
+            PHPhotoLibrary.shared().performChanges({
+                // Request creating an asset from the image.
+                let creationRequest = PHAssetChangeRequest.creationRequestForAsset(from: self.photo!)
+                // Set metadata location
+                
+                creationRequest.location = CLLocation(latitude: self.latitude!, longitude: self.longitude!)
+                
+            }, completionHandler: { success, error in
+                if !success { print("error creating asset") }
+            })
+        }
+    }
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
     {
         print("Error \(error)")
