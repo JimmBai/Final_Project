@@ -3,4 +3,4 @@ The app helps the user to measure an object in their photo by choosing a referen
 
 Some Screenshots:
 ![alt text](/README-images/main_screen.png =250x250)
-![alt text](/README-images/measureing_screen.png =250x250)
+
